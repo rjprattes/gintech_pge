@@ -2,6 +2,7 @@
 .env
 .env.backup
 .env.testing
+composer.phar
 
 # Dependências (Composer e Node)
 /vendor/
