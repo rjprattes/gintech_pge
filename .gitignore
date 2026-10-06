@@ -1,0 +1,21 @@
+# Variáveis de ambiente e credenciais
+.env
+.env.backup
+.env.testing
+
+# Dependências (Composer e Node)
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Logs e caches do framework
+/storage/*.key
+/storage/logs/
+/bootstrap/cache/
+
+# Arquivos de IDE e SO
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
