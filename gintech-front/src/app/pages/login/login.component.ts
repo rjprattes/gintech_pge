@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router'; 
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,17 +12,23 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
+    cpf: ['', Validators.required],
+    senha: ['', Validators.required]
   });
 
   onSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
-        next: (res) => alert('Login efetuado! Token recebido.'),
-        error: (err) => alert('Credenciais inválidas.')
+        next: (res) => {
+          
+          this.router.navigate(['/painel']); 
+        },
+        error: (err) => {
+          alert(err.error.message || 'Erro ao realizar login.');
+        }
       });
     }
   }

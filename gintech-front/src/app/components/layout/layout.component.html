@@ -1,0 +1,29 @@
+<div class="flex h-screen bg-gray-100">
+  <!-- Menu Lateral (Sidebar) -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col">
+    <div class="p-6 text-center border-b border-gray-700">
+      <h2 class="text-2xl font-bold">GINTech</h2>
+      <p class="text-xs text-gray-400 mt-1">Procuradoria Geral do Estado</p>
+    </div>
+    
+    <nav class="flex-1 p-4 space-y-2">
+      <a routerLink="/painel" routerLinkActive="bg-gray-700" class="block px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        Dashboard
+      </a>
+      <a routerLink="/equipamentos" routerLinkActive="bg-gray-700" class="block px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        Equipamentos
+      </a>
+    </nav>
+
+    <div class="p-4 border-t border-gray-700">
+      <button (click)="sair()" class="w-full text-left px-4 py-2 text-red-400 hover:text-red-300 hover:bg-gray-700 rounded-md transition-colors">
+        Sair do Sistema
+      </button>
+    </div>
+  </aside>
+
+  <!-- Área de Conteúdo Dinâmico -->
+  <main class="flex-1 overflow-y-auto p-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>

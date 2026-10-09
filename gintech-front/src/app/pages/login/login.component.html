@@ -6,14 +6,16 @@
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
-        <input type="email" formControlName="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="seu@email.com">
+        <label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+        <!-- Tipo alterado para text e formControlName para cpf -->
+        <input type="text" formControlName="cpf" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="Apenas números">
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
-        <input type="password" formControlName="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="••••••••">
+        <!-- formControlName alterado para senha -->
+        <input type="password" formControlName="senha" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="••••••••">
       </div>
-      <button type="submit" [disabled]="loginForm.invalid" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 font-medium disabled:opacity-50">
+      <button type="submit" [disabled]="loginForm.invalid" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 font-medium disabled:opacity-50 transition-colors">
         Entrar no Sistema
       </button>
     </form>

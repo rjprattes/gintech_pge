@@ -1,6 +1,7 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Fundo padrão do sistema GINTech  */
 body {
     @apply bg-gray-50 text-gray-800;
 }

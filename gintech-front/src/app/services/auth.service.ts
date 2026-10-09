@@ -14,6 +14,8 @@ export class AuthService {
       tap(response => {
         if (response.token) {
           localStorage.setItem('token', response.token);
+          // Adicione esta linha para guardar os dados do funcionário em formato texto
+          localStorage.setItem('funcionario', JSON.stringify(response.funcionario)); 
         }
       })
     );
