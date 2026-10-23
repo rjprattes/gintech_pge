@@ -27,6 +27,7 @@ class EquipamentoController extends Controller
         ]);
 
         // Se a validação passar, salva no banco
+        $dados['organizacao_id'] = 1; // ID da organização PGE
         $equipamento = Equipamento::create($request->all());
 
         return response()->json([
