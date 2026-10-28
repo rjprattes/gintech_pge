@@ -7,7 +7,7 @@ import { tap } from 'rxjs';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'http://10.182.104.21:8000/api';
 
   login(credenciais: any) {
     return this.http.post<any>(`${this.apiUrl}/login`, credenciais).pipe(

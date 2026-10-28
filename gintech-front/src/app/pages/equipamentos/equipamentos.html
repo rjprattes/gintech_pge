@@ -1,9 +1,6 @@
 <div>
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Gestão de Equipamentos</h1>
-    <button (click)="abrirModal()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 font-medium transition-colors shadow-sm">
-      + Novo Equipamento
-    </button>
   </div>
 
   <div class="flex gap-6 items-start">
@@ -22,9 +19,9 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
-          @for (item of equipamentos; track item.id) {
+          @for (item of equipamentos; track item.id; let i = $index) {
             <tr class="hover:bg-gray-50 transition-colors">
-              <td class="p-4 text-gray-500 text-center">{{ item.id }}</td>
+              <td class="p-4 text-gray-500 text-center">{{ i + 1 }}</td>
               <td class="p-4 font-medium">{{ item.nome }}</td>
               <td class="p-4">{{ item.numero_serie }}</td>
               <td class="p-4 text-gray-600">{{ item.tipo }}</td>
@@ -48,13 +45,50 @@
           }
         </tbody>
       </table>
+      <div class="bg-gray-50 px-4 py-3 border-t border-gray-200 flex items-center justify-between sm:px-6">
+        
+        <!-- Seleção de itens por página -->
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-700">Mostrar</label>
+          <select [(ngModel)]="itensPorPagina" (change)="mudarLimite()" class="border-gray-300 rounded-md text-sm py-1 pl-2 pr-6 focus:ring-blue-500 focus:border-blue-500">
+            @for (opcao of opcoesPorPagina; track opcao) {
+              <option [value]="opcao">{{ opcao }}</option>
+            }
+          </select>
+          <span class="text-sm text-gray-700">registos</span>
+        </div>
+
+        <!-- Botões Anterior / Próximo -->
+        <div class="flex items-center gap-4">
+          <span class="text-sm text-gray-700">
+            Página <span class="font-medium">{{ paginaAtual }}</span> de <span class="font-medium">{{ totalPaginas }}</span>
+          </span>
+          
+          <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+            <button (click)="mudarPagina(paginaAtual - 1)" [disabled]="paginaAtual === 1" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+              <span class="sr-only">Anterior</span>
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>
+            </button>
+            <button (click)="mudarPagina(paginaAtual + 1)" [disabled]="paginaAtual === totalPaginas" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+              <span class="sr-only">Próxima</span>
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
     </div>
 
     <!-- Dashboard Lateral (Direita) -->
-    <div class="w-72 space-y-4">
+    <div class="w-72 space-y-4 sticky top-6 h-fit">
+      <button (click)="abrirModal()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-md hover:bg-blue-700 font-medium transition-colors shadow-sm flex justify-center items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
+        Novo Equipamento
+      </button>
       <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
         <h3 class="text-sm font-medium text-gray-500 mb-1">Total Registrado</h3>
-        <p class="text-3xl font-bold text-gray-800">{{ equipamentos.length }}</p>
+        <p class="text-3xl font-bold text-gray-800">{{ totalGeral }}</p>
       </div>
       
       <div class="bg-white rounded-lg shadow-sm border border-green-200 p-5 border-l-4 border-l-green-500">
@@ -65,6 +99,11 @@
       <div class="bg-white rounded-lg shadow-sm border border-yellow-200 p-5 border-l-4 border-l-yellow-500">
         <h3 class="text-sm font-medium text-yellow-600 mb-1">Em Manutenção</h3>
         <p class="text-3xl font-bold text-gray-800">{{ totalManutencao }}</p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-sm border border-red-200 p-5 border-l-4 border-l-red-500">
+        <h3 class="text-sm font-medium text-red-600 mb-1">Inativos</h3>
+        <p class="text-3xl font-bold text-gray-800">{{ totalGeral - totalAtivos - totalManutencao }}</p>
       </div>
     </div>
   </div>
